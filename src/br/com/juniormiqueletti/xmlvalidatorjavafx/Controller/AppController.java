@@ -9,10 +9,16 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
+import javax.swing.text.NumberFormatter;
+import java.io.File;
+
 
 public class AppController{
 
     FileChooser chooser = new FileChooser();
+    File xmlFile;
+    File xsdFile;
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
     @FXML
     private Button btnXmlFile;
@@ -35,24 +41,60 @@ public class AppController{
     @FXML
     private TextArea taXsdFile;
 
+    public AppController() {
+    }
+
     @FXML
     public void chooseXmlFile(ActionEvent event){
-        chooser.setTitle("Choose your XML File");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files(*.xml)", "*.xml"));
-        chooser.showOpenDialog(Init.mainStage);
+        try {
+
+            chooser.setTitle("Choose your XML File");
+            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files(*.xml)", "*.xml"));
+            xmlFile = chooser.showOpenDialog(Init.mainStage);
+            this.tfXmlFile.setText(xmlFile.getAbsolutePath());
+
+        }catch (NullPointerException e){
+
+            this.tfXmlFile.setText("");
+
+        }catch (Exception e){
+
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(e.getMessage());
+            alert.show();
+
+        }
     }
 
     @FXML
     public void chooseXsdFile(ActionEvent event){
-        chooser.setTitle("Choose your XSD File");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XSD Files(*.xsd)", "*.xsd"));
-        chooser.showOpenDialog(Init.mainStage);
+        try {
+
+            chooser.setTitle("Choose your XSD File");
+            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XSD Files(*.xsd)", "*.xsd"));
+            xsdFile = chooser.showOpenDialog(Init.mainStage);
+            this.tfXmlFile.setText(xsdFile.getAbsolutePath());
+
+        }catch (NullPointerException e){
+
+            this.tfXmlFile.setText("");
+
+        }catch (Exception e){
+
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(e.getMessage());
+            alert.show();
+
+        }
+
     }
 
     @FXML
     public void validate(ActionEvent event){
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
         alert.setTitle("Information");
         alert.setHeaderText("in progress..");
         alert.show();

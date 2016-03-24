@@ -8,11 +8,14 @@ import javafx.stage.Stage;
 
 public class Init extends Application {
 
+    public static Stage mainStage;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/br/com/juniormiqueletti/xmlvalidatorjavafx/View/App.fxml"));
         primaryStage.setTitle("XmlValidator | JuniorMiqueletti");
         primaryStage.setScene(new Scene(root, 1000, 600));
+        mainStage = primaryStage;
         primaryStage.show();
     }
 

@@ -1,6 +1,7 @@
 package br.com.juniormiqueletti.xmlvalidatorjavafx.Controller;
 
 import br.com.juniormiqueletti.xmlvalidatorjavafx.App.Init;
+import com.sun.xml.internal.bind.v2.TODO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -8,17 +9,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import org.xml.sax.SAXException;
 
-import javax.swing.text.NumberFormatter;
+import javax.xml.bind.JAXBException;
 import java.io.File;
+import java.util.Scanner;
 
 
-public class AppController{
+public class AppController {
 
-    FileChooser chooser = new FileChooser();
-    File xmlFile;
-    File xsdFile;
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private FileChooser chooser = new FileChooser();
+    private File xmlFile;
+    private File xsdFile;
+    private Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private XmlValidator xmlValidator;
 
     @FXML
     private Button btnXmlFile;
@@ -45,19 +49,28 @@ public class AppController{
     }
 
     @FXML
-    public void chooseXmlFile(ActionEvent event){
+    public void chooseXmlFile(ActionEvent event) {
         try {
 
             chooser.setTitle("Choose your XML File");
+            chooser.getExtensionFilters().clear();
             chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files(*.xml)", "*.xml"));
             xmlFile = chooser.showOpenDialog(Init.mainStage);
             this.tfXmlFile.setText(xmlFile.getAbsolutePath());
 
-        }catch (NullPointerException e){
+             /*TODO Refactor*/
+            String textArea = null;
+            Scanner scan = new Scanner(xmlFile);
+            while (scan.hasNext()){
+                textArea+=scan.next()+"\n";
+            }
+            this.taXmlFile.setText(textArea);
+
+        } catch (NullPointerException e) {
 
             this.tfXmlFile.setText("");
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -68,19 +81,28 @@ public class AppController{
     }
 
     @FXML
-    public void chooseXsdFile(ActionEvent event){
+    public void chooseXsdFile(ActionEvent event) {
         try {
 
             chooser.setTitle("Choose your XSD File");
+            chooser.getExtensionFilters().clear();
             chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XSD Files(*.xsd)", "*.xsd"));
             xsdFile = chooser.showOpenDialog(Init.mainStage);
-            this.tfXmlFile.setText(xsdFile.getAbsolutePath());
+            this.tfXsdFile.setText(xsdFile.getAbsolutePath());
 
-        }catch (NullPointerException e){
+            /*TODO Refactor*/
+            String textArea = null;
+            Scanner scan = new Scanner(xsdFile);
+            while (scan.hasNext()){
+                textArea+=scan.next()+"\n";
+            }
+            this.taXsdFile.setText(textArea);
 
-            this.tfXmlFile.setText("");
+        } catch (NullPointerException e) {
 
-        }catch (Exception e){
+            this.tfXsdFile.setText("");
+
+        } catch (Exception e) {
 
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -92,11 +114,21 @@ public class AppController{
     }
 
     @FXML
-    public void validate(ActionEvent event){
+    public void validate(ActionEvent event) {
 
+        xmlValidator = new XmlValidator(xmlFile,xsdFile);
+        String finalMessage = null;
+
+        try {
+
+            finalMessage= xmlValidator.validate();
+
+        }catch (Exception e){
+             alert.setHeaderText(e.getMessage());
+        }
 
         alert.setTitle("Information");
-        alert.setHeaderText("in progress..");
+        alert.setHeaderText(finalMessage);
         alert.show();
     }
 

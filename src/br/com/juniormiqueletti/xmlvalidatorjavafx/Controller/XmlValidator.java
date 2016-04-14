@@ -31,6 +31,7 @@ public class XmlValidator {
     public String validate() throws SAXException, JAXBException {
 
         try {
+            /*TODO refactor*/
             final List<SAXException> exceptions = new LinkedList<SAXException>();
 
             SchemaFactory factory =

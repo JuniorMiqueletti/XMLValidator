@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
 
-
-<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.72" fx:controller="br.com.juniormiqueletti.xmlvalidatorjavafx.Controller.AppController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.juniormiqueletti.xmlvalidatorjavafx.Controller.AppController">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -29,6 +29,7 @@
             <TextArea fx:id="taXsdFile" editable="false" layoutX="390.0" layoutY="234.0" prefHeight="181.0" prefWidth="328.0" promptText="xsd file content..." AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="390.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="234.0" />
             <Label layoutX="28.0" layoutY="215.0" text="XML File content" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="611.0" AnchorPane.topAnchor="215.0" />
             <Label layoutX="390.0" layoutY="215.0" prefHeight="17.0" prefWidth="104.0" text="XSD File content" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="390.0" AnchorPane.rightAnchor="234.0" AnchorPane.topAnchor="215.0" />
+            <Text layoutX="28.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="XML Validator" textAlignment="CENTER" wrappingWidth="676.9999976158142" />
          </children>
       </AnchorPane>
    </children>

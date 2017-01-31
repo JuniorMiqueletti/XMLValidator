@@ -12,7 +12,7 @@ public class Init extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/br/com/juniormiqueletti/xmlvalidatorjavafx/View/App.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/App.fxml"));
         primaryStage.setTitle("XmlValidator | JuniorMiqueletti");
         primaryStage.setScene(new Scene(root, 1000, 600));
         mainStage = primaryStage;

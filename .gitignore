@@ -1,1 +1,7 @@
 out/production
+.idea
+target
+.settings
+.project
+.classpath
+*.iml

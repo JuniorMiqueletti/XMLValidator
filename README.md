@@ -1,7 +1,3 @@
-XML Validator | JavaFX Project
+[![Build Status](https://travis-ci.org/JuniorMiqueletti/XMLValidator.svg?branch=master)](https://travis-ci.org/JuniorMiqueletti/XMLValidator)
 
-Junior Miqueletti
-
-juniormiqueletti@gmail.com
-
-IntelJ IDEA 14.0
+## XML Validator | JavaFX Project

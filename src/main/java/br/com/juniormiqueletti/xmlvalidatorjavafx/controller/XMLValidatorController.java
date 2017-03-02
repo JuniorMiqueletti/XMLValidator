@@ -1,6 +1,7 @@
-package br.com.juniormiqueletti.xmlvalidatorjavafx.Controller;
+package br.com.juniormiqueletti.xmlvalidatorjavafx.controller;
 
-import br.com.juniormiqueletti.xmlvalidatorjavafx.App.Init;
+import br.com.juniormiqueletti.xmlvalidatorjavafx.app.Init;
+import br.com.juniormiqueletti.xmlvalidatorjavafx.service.XMLValidatorService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -13,13 +14,13 @@ import java.io.File;
 import java.util.Scanner;
 
 
-public class AppController {
+public class XMLValidatorController {
 
     private FileChooser chooser = new FileChooser();
     private File xmlFile;
     private File xsdFile;
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    private XmlValidator xmlValidator;
+    private XMLValidatorService XMLValidatorService;
 
     @FXML
     private Button btnXmlFile;
@@ -42,7 +43,7 @@ public class AppController {
     @FXML
     private TextArea taXsdFile;
 
-    public AppController() {
+    public XMLValidatorController() {
     }
 
     @FXML
@@ -113,12 +114,12 @@ public class AppController {
     @FXML
     public void validate(ActionEvent event) {
 
-        xmlValidator = new XmlValidator(xmlFile,xsdFile);
+        XMLValidatorService = new XMLValidatorService(xmlFile,xsdFile);
         String finalMessage = null;
 
         try {
 
-            finalMessage= xmlValidator.validate();
+            finalMessage= XMLValidatorService.validate();
 
         }catch (Exception e){
              alert.setHeaderText(e.getMessage());

@@ -1,4 +1,4 @@
-package br.com.juniormiqueletti.xmlvalidatorjavafx.App;
+package br.com.juniormiqueletti.xmlvalidatorjavafx.app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +13,7 @@ public class Init extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/App.fxml"));
-        primaryStage.setTitle("XmlValidator | JuniorMiqueletti");
+        primaryStage.setTitle("XMLValidatorService | JuniorMiqueletti");
         primaryStage.setScene(new Scene(root, 1000, 600));
         mainStage = primaryStage;
         primaryStage.show();

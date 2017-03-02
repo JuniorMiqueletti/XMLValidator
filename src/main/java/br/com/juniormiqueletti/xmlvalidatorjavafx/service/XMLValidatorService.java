@@ -1,4 +1,4 @@
-package br.com.juniormiqueletti.xmlvalidatorjavafx.Controller;
+package br.com.juniormiqueletti.xmlvalidatorjavafx.service;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -18,12 +18,12 @@ import java.util.List;
  * Created by Junior-Pc on 24/03/2016.
  * Class with validation method
  */
-public class XmlValidator {
+public class XMLValidatorService {
 
     private File xmlFile;
     private File xsdFile;
 
-    public XmlValidator(File xmlFile, File xsdFile) {
+    public XMLValidatorService(File xmlFile, File xsdFile) {
         this.xmlFile = xmlFile;
         this.xsdFile = xsdFile;
     }

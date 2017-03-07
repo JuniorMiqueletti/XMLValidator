@@ -1,133 +1,90 @@
 package br.com.juniormiqueletti.xmlvalidatorjavafx.controller;
 
-import br.com.juniormiqueletti.xmlvalidatorjavafx.app.Init;
 import br.com.juniormiqueletti.xmlvalidatorjavafx.service.XMLValidatorService;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 
 import java.io.File;
-import java.util.Scanner;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 
 public class XMLValidatorController {
 
-    private FileChooser chooser = new FileChooser();
-    private File xmlFile;
-    private File xsdFile;
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    private XMLValidatorService XMLValidatorService;
+    private XMLValidatorService service = new XMLValidatorService();
+    private String finalMessage = new String();;
 
     @FXML
-    private Button btnXmlFile;
+    private JFXTextField jtfXsdFilePath = new JFXTextField();
 
     @FXML
-    private Button btnXsdFile;
+    private JFXTextField jtfXmlFilePath = new JFXTextField();
+
+    public XMLValidatorController() {}
 
     @FXML
-    private TextField tfXmlFile;
-
-    @FXML
-    private TextField tfXsdFile;
-
-    @FXML
-    private Button btnValidate;
-
-    @FXML
-    private TextArea taXmlFile;
-
-    @FXML
-    private TextArea taXsdFile;
-
-    public XMLValidatorController() {
-    }
-
-    @FXML
-    public void chooseXmlFile(ActionEvent event) {
-        try {
-
-            chooser.setTitle("Choose your XML File");
-            chooser.getExtensionFilters().clear();
-            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files(*.xml)", "*.xml"));
-            xmlFile = chooser.showOpenDialog(Init.mainStage);
-            this.tfXmlFile.setText(xmlFile.getAbsolutePath());
-
-             /*TODO Refactor*/
-            String textArea = null;
-            Scanner scan = new Scanner(xmlFile);
-            while (scan.hasNext()){
-                textArea+=scan.next()+"\n";
-            }
-            this.taXmlFile.setText(textArea);
-
-        } catch (NullPointerException e) {
-
-            this.tfXmlFile.setText("");
-
-        } catch (Exception e) {
-
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(e.getMessage());
-            alert.show();
-
+    private void handlerDragOver(DragEvent event){
+        if(event.getDragboard().hasFiles()){
+            event.acceptTransferModes(TransferMode.ANY);
         }
     }
 
     @FXML
-    public void chooseXsdFile(ActionEvent event) {
-        try {
+    private void handleDropXsd(DragEvent event){
+        List<File> files = event.getDragboard().getFiles();
+        if (isOnlyOneFile(files))
+            jtfXsdFilePath.setText(files.get(0).getAbsolutePath());
+    }
 
-            chooser.setTitle("Choose your XSD File");
-            chooser.getExtensionFilters().clear();
-            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XSD Files(*.xsd)", "*.xsd"));
-            xsdFile = chooser.showOpenDialog(Init.mainStage);
-            this.tfXsdFile.setText(xsdFile.getAbsolutePath());
+    @FXML
+    private void handleDropXml(DragEvent event){
+        List<File> files = event.getDragboard().getFiles();
+        if (isOnlyOneFile(files))
+            jtfXmlFilePath.setText(files.get(0).getAbsolutePath());
+    }
 
-            /*TODO Refactor*/
-            String textArea = null;
-            Scanner scan = new Scanner(xsdFile);
-            while (scan.hasNext()){
-                textArea+=scan.next()+"\n";
-            }
-            this.taXsdFile.setText(textArea);
-
-        } catch (NullPointerException e) {
-
-            this.tfXsdFile.setText("");
-
-        } catch (Exception e) {
-
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(e.getMessage());
+    private boolean isOnlyOneFile(List<File> files) {
+        if (files.size() > 1){
+            alert.setContentText("Please select only one file!");
             alert.show();
+            return false;
+        };
 
-        }
-
+        return true;
     }
 
     @FXML
     public void validate(ActionEvent event) {
 
-        XMLValidatorService = new XMLValidatorService(xmlFile,xsdFile);
-        String finalMessage = null;
+        List<String> returnValidationMessages = new ArrayList<>();
+        finalMessage = null;
 
         try {
 
-            finalMessage= XMLValidatorService.validate();
+            service.setXmlFile(jtfXmlFilePath.getText());
+            service.setXsdFile(jtfXsdFilePath.getText());
+
+            returnValidationMessages = service.validate();
 
         }catch (Exception e){
-             alert.setHeaderText(e.getMessage());
+            returnValidationMessages.add(e.getMessage());
         }
 
         alert.setTitle("Information");
-        alert.setHeaderText(finalMessage);
+
+        returnValidationMessages.forEach((v) -> {
+            finalMessage =  finalMessage == null ? String.format("\n%s",v) : finalMessage + String.format("\n%s",v);
+        });
+
+        alert.setContentText(finalMessage);
         alert.show();
     }
-
 }

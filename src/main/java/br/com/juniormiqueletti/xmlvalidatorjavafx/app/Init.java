@@ -13,9 +13,10 @@ public class Init extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/App.fxml"));
-        primaryStage.setTitle("XMLValidatorService | JuniorMiqueletti");
-        primaryStage.setScene(new Scene(root, 1000, 600));
+        primaryStage.setTitle("XMLValidator | JuniorMiqueletti");
+        primaryStage.setScene(new Scene(root));
         mainStage = primaryStage;
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

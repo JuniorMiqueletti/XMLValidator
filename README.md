@@ -18,3 +18,5 @@
 
 > Requeriments:
 Java 1.8
+
+![App V1.0](https://raw.githubusercontent.com/JuniorMiqueletti/XMLValidator/master/src/main/resources/img/AppV1.0.JPG)
